@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const url = "https://localhost:8443/editora-livros-api/pessoa";
+const url = "http://editorasenaiapi:8080/editora-livros-api/pessoa";
+// const url = "http://localhost:8080/editora-livros-api/pessoa";
 
 class PessoasService {
 
@@ -24,7 +25,7 @@ class PessoasService {
         return axios.delete(url + "/" + cpf);
     }
 
-    putPessoa(cpf , livro) {
+    putPessoa(cpf , pessoa) {
         return axios.put(url + "/" + cpf, pessoa);
     }
 

@@ -42,11 +42,11 @@ const Livro = () => {
             if (isbn) {
                 seteditando(true)
                 try {
-                    const response = await new LivrosService().getLivro(isbn)
+                    const response = new LivrosService().getLivro(isbn)
                     setlivro(response.data);
                     try {
-                        const responseStatus = await new LivrosService().getStatus()
-                        const dataStatus = await responseStatus.data
+                        const responseStatus = new LivrosService().getStatus()
+                        const dataStatus = responseStatus.data
                         setListaStatus(dataStatus)
                     } catch (error) {
                         console.log(error)
@@ -97,10 +97,10 @@ const Livro = () => {
             });
             let response
             if (editando) {
-                response = await LivrosService.putLivro(livro.isbn, data)
+                response = LivrosService.putLivro(livro.isbn, data)
                 //    response = await LivrosService.putLivro(livro.isbn, livro)
             } else {
-                response = await LivrosService.postLivro(data)
+                response = LivrosService.postLivro(data)
                 //    response = await LivrosService.postLivro(livro)
             }
             if (response.data != null) {

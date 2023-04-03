@@ -3,16 +3,16 @@ import './App.css';
 
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
-import {BarraNavegacao} from './components/BarraNavegacao';
+import {BarraNavegacao} from './components';
 import Rodape from './components/Rodape';
 import TabelaLivros from './components/Livro/TabelaLivros';
 import {Home} from './pages/Home';
-import Contato from './components/Contato';
+import {Contato} from './pages/Contato';
 import Livro from './components/Livro/Livro';
-import Usuario from "./components/Usuario/Usuario";
-import Login from "./components/Login";
+import CadastroUsuario from "./pages/CadastroUsuario/CadastroUsuario";
+import {Login} from "./pages/Login";
 
-function App() {
+export const App = () => {
     return (
         <>
             <BrowserRouter>
@@ -22,8 +22,8 @@ function App() {
                         <Route path="/" element={<Home/>}/>
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/contato" element={<Contato/>}/>
-                        <Route path="/usuario/cadastro" element={<Usuario/>}/>
-                        <Route path="/usuario/editar:cpf" element={<Usuario/>}/>
+                        <Route path="/usuario/cadastro" element={<CadastroUsuario/>}/>
+                        <Route path="/usuario/editar:cpf" element={<CadastroUsuario/>}/>
                         <Route path="/livros" element={<TabelaLivros/>}/>
                         <Route path="/livro/cadastro" element={<Livro/>}/>
                         <Route path="/livro/editar/:isbn" element={<Livro/>}/>
@@ -34,5 +34,3 @@ function App() {
         </>
     );
 }
-
-export default App;

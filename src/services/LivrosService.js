@@ -1,6 +1,8 @@
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
-const url = "https://localhost:8443/editora-livros-api/livro";
+const url = "http://editorasenaiapi:8080/editora-livros-api/livro";
+// const url = "http://localhost:8080/editora-livros-api/livro";
+
 
 export class LivrosService {
 
@@ -10,15 +12,15 @@ export class LivrosService {
     //     this.navigate = navigate;
     // }
 
-    postLivro(livro) {
-        return axios.post(url, livro);
+    async postLivro(livro) {
+        return await axios.post(url, livro);
     }
 
-    getLivros() {
+    async getLivros() {
         const config = {
             withCredentials: true,
         };
-        return axios.get(url,config)
+        return await axios.get(url,config)
             .then(response => {
                 return(response);
             })
@@ -27,24 +29,24 @@ export class LivrosService {
             });
     }
     
-    getStatus() {
-        return axios.get(url + "/status");
+    async getStatus() {
+        return await axios.get(url + "/status");
     }
 
-    getLivrosPesquisa(pesquisa) {
-        return axios.get(url + "/" + pesquisa);
+    async getLivrosPesquisa(pesquisa) {
+        return await axios.get(url + "/" + pesquisa);
     }
 
-    getLivro(isbn) {
-        return axios.get(url + "/isbn/" + isbn);
+    async getLivro(isbn) {
+        return await axios.get(url + "/isbn/" + isbn);
     }
 
-    deleteLivro(isbn) {
-        return axios.delete(url + "/" + isbn);
+    async deleteLivro(isbn) {
+        return await axios.delete(url + "/" + isbn);
     }
 
-    putLivro(isbn , livro) {
-        return axios.put(url + "/" + isbn, livro);
+    async putLivro(isbn , livro) {
+        return await axios.put(url + "/" + isbn, livro);
     }
 
 }

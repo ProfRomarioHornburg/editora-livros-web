@@ -1,20 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {Button, Card, Label, TextInput, Checkbox, Select, Spinner} from "flowbite-react";
 import PessoasService from "../../services/PessoasService";
+import {usePessoa} from "./usePessoa"
 
+export const CadastroUsuario = ({usuario}) => {
 
-const Usuario = () => {
-
-    const pessoaDados = {
-        cpf: "",
-        nome: "",
-        sobrenome: "",
-        email: "",
-        senha: "",
-        genero: ""
-    }
-    const [confSenha, setConfSenha] = useState("")
-    const [pessoa, setpessoa] = useState(pessoaDados)
+    const [confSenha, setConfSenha] = useState(null)
+    const [pessoa, setpessoa] = useState(pessoaObject)
     const [carregando, setCarregando] = useState(false)
 
     const submit = () => {
@@ -25,12 +17,7 @@ const Usuario = () => {
         console.log("Fui")
     }
 
-    let atualizarPessoa = (event) => {
-        setpessoa({
-            ...pessoa,
-            [event.target.name]: event.target.value
-        })
-    };
+    const {atualizarPessoa} = usePessoa(pessoa, setpessoa)
 
     const [listaGenero, setListaGenero] = useState([])
 
@@ -203,4 +190,3 @@ const Usuario = () => {
         </>
     )
 }
-export default Usuario

@@ -1,3 +1,3 @@
 export * from "./BarraNavegacao"
 export * from "./Paragrafo"
-export * from "./Titulo5"
+export * from "./Titulo"

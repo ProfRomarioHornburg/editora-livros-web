@@ -1,58 +1,55 @@
 import React, {useEffect, useState} from "react";
 import {Button, Card, Label, TextInput, Checkbox, Select, Spinner} from "flowbite-react";
 import PessoasService from "../../services/PessoasService";
-import {usePessoa} from "./usePessoa"
+import {usePessoa} from "../../hooks/usePessoa";
+import pessoaJson from "./pessoa.json";
 
-export const CadastroUsuario = ({usuario}) => {
+export const CadastroUsuario = () => {
 
     const [confSenha, setConfSenha] = useState(null)
-    const [pessoa, setpessoa] = useState(pessoaObject)
+    const [pessoa, setPessoa] = useState(pessoaJson)
     const [carregando, setCarregando] = useState(false)
 
     const submit = () => {
-        console.log("Oi")
+        PessoasService.postPessoa(pessoa).then(response => {
+            console.log(response)
+        }).catch(error => {
+            console.log(error)
+        })
     }
 
-    function retornar() {
-        console.log("Fui")
+    function voltar() {
+        console.log("voltar")
+        // history.push('/login')
     }
 
-    const {atualizarPessoa} = usePessoa(pessoa, setpessoa)
+    const {atualizarPessoa} = usePessoa(pessoa, setPessoa)
 
     const [listaGenero, setListaGenero] = useState([])
 
     useEffect(() => {
-        async function start() {
-            setCarregando(true)
-            try {
-                const responseGenero = await PessoasService.getGeneros()
-                const dataGenero = await responseGenero.data
-                setListaGenero(dataGenero)
-            } catch (error) {
-                console.log(error)
-            }
+        setCarregando(true)
+        PessoasService.getGeneros().then(response => {
+            setListaGenero(response.data)
+        }).catch(error => {
+            console.log(error)
+        }).finally(() => {
             setCarregando(false)
-        }
-
-        start()
+        })
     }, [])
 
     if (carregando) {
         return (
             <div className="flex justify-center items-center h-80">
-                <Spinner />
+                <Spinner/>
             </div>
         )
     }
     return (
         <>
-            {/*<div>*/}
-            {/*    <MeuToast toastDados={dados} />*/}
-            {/*</div>*/}
             <Card>
                 <form id='formLivro' onSubmit={submit}>
                     <div className="my-2 grid gap-2 grid-cols-2">
-
                         <div>
                             <Label
                                 htmlFor="nome"
@@ -110,8 +107,8 @@ export const CadastroUsuario = ({usuario}) => {
                                 value={pessoa.genero}
                                 onChange={atualizarPessoa}
                             >
-                                {listaGenero.map((genero, index) => (
-                                    <option key={index}>
+                                {listaGenero.map((genero) => (
+                                    <option key={genero}>
                                         {genero}
                                     </option>
                                 ))}
@@ -181,7 +178,7 @@ export const CadastroUsuario = ({usuario}) => {
                         <Button type="submit">
                             Cadastrar
                         </Button>
-                        <Button color="light" onClick={retornar}>
+                        <Button color="light" onClick={voltar}>
                             Voltar
                         </Button>
                     </div>

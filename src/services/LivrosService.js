@@ -1,52 +1,117 @@
-import axios from "axios";
-import {useNavigate} from "react-router-dom";
-const url = "http://editorasenaiapi:8080/editora-livros-api/livro";
-// const url = "http://localhost:8080/editora-livros-api/livro";
+import {Axios} from "./Axios";
+// import {useNavigate} from "react-router-dom";
+
+// const url = "http://editorasenaiapi:8080/editora-livros-api/livro";
+const url = "/livro";
+
+//
+// export const postLivro = async (livro) => {
+//     return await Axios.post(url, livro)
+//         .catch(error => {
+//             console.log(error);
+//         });
+// }
+//
+// export const getLivros = async () => {
+//     return await Axios.get(url)
+//         .then(response => {
+//             return response;
+//         })
+//         .catch(error => {
+//             console.log(error);
+//         });
+// }
+//
+// export const getStatus = async () => {
+//     return await Axios.get(url + "/status");
+// }
+//
+// export const getLivrosPesquisa = async (pesquisa) => {
+//     return await Axios.get(url + "/" + pesquisa);
+// }
+//
+// export const getLivro = async (isbn) => {
+//     return await Axios.get(url + "/isbn/" + isbn);
+// }
+//
+// export const deleteLivro = async (isbn) => {
+//     return await Axios.delete(url + "/" + isbn);
+// }
+//
+// export const putLivro = async (isbn, livro) => {
+//     return await Axios.put(url + "/" + isbn, livro);
+// }
 
 
-export class LivrosService {
 
-    // navigate
+export const apiLivros = {
+    getLivros: async () => {
+        try {
+            const response = await Axios.get(url);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    },
 
-    // constructor(navigate) {
-    //     this.navigate = navigate;
-    // }
+    getLivrosPesquisa: async (pesquisa) => {
+        try {
+            const response = await Axios.get(url + `/${pesquisa}`);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    },
 
-    async postLivro(livro) {
-        return await axios.post(url, livro);
-    }
+    getLivro: async (isbn) => {
+        try {
+            const response = await Axios.get(url + `/isbn/${isbn}`);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    },
 
-    async getLivros() {
-        const config = {
-            withCredentials: true,
-        };
-        return await axios.get(url,config)
-            .then(response => {
-                return(response);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
-    
-    async getStatus() {
-        return await axios.get(url + "/status");
-    }
+    postLivro: async (livro) => {
+        try {
+            const response = await Axios.post(url, livro);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    },
 
-    async getLivrosPesquisa(pesquisa) {
-        return await axios.get(url + "/" + pesquisa);
-    }
+    putLivro: async (isbn, livro) => {
+        try {
+            const response = await Axios.put(url + `/isbn/${isbn}`, livro);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    },
 
-    async getLivro(isbn) {
-        return await axios.get(url + "/isbn/" + isbn);
-    }
+    deleteLivro: async (isbn) => {
+        try {
+            const response = await Axios.delete(url + `/${isbn}`);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    },
 
-    async deleteLivro(isbn) {
-        return await axios.delete(url + "/" + isbn);
-    }
-
-    async putLivro(isbn , livro) {
-        return await axios.put(url + "/" + isbn, livro);
-    }
-
-}
+    getStatus: async () => {
+        try {
+            const response = await Axios.get(url + "/status");
+            return response.data;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    },
+};

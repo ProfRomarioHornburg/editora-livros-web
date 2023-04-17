@@ -1,12 +1,12 @@
 import { Label, TextInput, FileInput, Button, Card, Table, Spinner, Select } from 'flowbite-react'
 import React, { useState, useEffect } from 'react'
-import {LivrosService} from '../../services/LivrosService'
+import {apiLivros} from '../../services'
 import MeuToast from '../MeuToast'
 import { useNavigate, useParams } from 'react-router-dom'
-import LinhaArquivo from '../LinhaArquivo'
+import {LinhaArquivo} from '../LinhaArquivo'
 
 
-const Livro = () => {
+export const Livro = () => {
 
     const livroDetalhes = {
         isbn: "",
@@ -42,10 +42,10 @@ const Livro = () => {
             if (isbn) {
                 seteditando(true)
                 try {
-                    const response = new LivrosService().getLivro(isbn)
+                    const response = apiLivros.getLivro(isbn)
                     setlivro(response.data);
                     try {
-                        const responseStatus = new LivrosService().getStatus()
+                        const responseStatus = apiLivros.getStatus()
                         const dataStatus = responseStatus.data
                         setListaStatus(dataStatus)
                     } catch (error) {
@@ -97,10 +97,10 @@ const Livro = () => {
             });
             let response
             if (editando) {
-                response = LivrosService.putLivro(livro.isbn, data)
+                response = apiLivros.putLivro(livro.isbn, data)
                 //    response = await LivrosService.putLivro(livro.isbn, livro)
             } else {
-                response = LivrosService.postLivro(data)
+                response = apiLivros.postLivro(data)
                 //    response = await LivrosService.postLivro(livro)
             }
             if (response.data != null) {
@@ -260,7 +260,7 @@ const Livro = () => {
                                 </Table.Head>
                                 <Table.Body className="divide-y">
                                     {!(Array.of(arquivos).length === 0) ? (
-                                        Array.of(arquivos).map((arquivo, i) => (
+                                        Object.values(arquivos).map((arquivo, i) => (
                                             <LinhaArquivo key={i} arquivo={arquivo} posicao={i} />
                                         ))
                                     ) : (
@@ -298,5 +298,3 @@ const Livro = () => {
         </>
     )
 }
-
-export default Livro

@@ -1,9 +1,10 @@
 import React, {useState} from 'react'
 import {Button, Card, Checkbox, Label, TextInput} from 'flowbite-react'
-import AutenticacaoService from "../../services/AutenticacaoService";
+import {login} from "../../services";
 import GoogleIcon from '@mui/icons-material/Google';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import {useNavigate} from "react-router-dom";
 
 export const Login = () => {
 
@@ -12,22 +13,19 @@ export const Login = () => {
         senha: ''
     });
 
+    const navigate = useNavigate()
     const atualizarUsuario = (event) => {
         setUser({...user, [event.target.name]: event.target.value})
         console.log(user);
     }
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        try {
-            const response = AutenticacaoService.login(user);
-            console.log(response);
-            // if(token) {
-            //     return <Navigate to={"/livros"}/>
-            // }
-        } catch (error) {
+            await login(user).then(() => {
+                navigate("/")
+            }).catch((error) => {
             console.error(error);
-        }
+        })
     }
 
     return (

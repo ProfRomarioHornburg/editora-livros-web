@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table } from 'flowbite-react'
 
-const LinhaArquivo = (props) => {
+export const LinhaArquivo = (props) => {
     const arquivo = props.arquivo
     const posicao = props.posicao
     return (
@@ -20,5 +20,3 @@ const LinhaArquivo = (props) => {
         </Table.Row>
     )
 }
-
-export default LinhaArquivo

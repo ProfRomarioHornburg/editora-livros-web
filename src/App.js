@@ -1,16 +1,7 @@
 import React from 'react';
-import './App.css';
-
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-
-import {BarraNavegacao} from './components';
-import Rodape from './components/Rodape';
-import TabelaLivros from './components/Livro/TabelaLivros';
-import {Home} from './pages/Home';
-import {Contato} from './pages/Contato';
-import Livro from './components/Livro/Livro';
-import CadastroUsuario from "./pages/CadastroUsuario/CadastroUsuario";
-import {Login} from "./pages/Login";
+import {Rodape, BarraNavegacao} from './components';
+import {Home, Livros, Contato, Login, CadastroUsuario, ChatRoom, CadastroLivro} from './pages';
 
 export const App = () => {
     return (
@@ -24,9 +15,11 @@ export const App = () => {
                         <Route path="/contato" element={<Contato/>}/>
                         <Route path="/usuario/cadastro" element={<CadastroUsuario/>}/>
                         <Route path="/usuario/editar:cpf" element={<CadastroUsuario/>}/>
-                        <Route path="/livros" element={<TabelaLivros/>}/>
-                        <Route path="/livro/cadastro" element={<Livro/>}/>
-                        <Route path="/livro/editar/:isbn" element={<Livro/>}/>
+                        <Route path="/livros" element={<Livros/>}/>
+                        <Route path="/livro/cadastro" element={<CadastroLivro/>}/>
+                        <Route path="/livro/:isbn" element={<CadastroLivro/>}/>
+                        <Route path="/livro/:isbn/chat" element={<ChatRoom/>}/>
+                        <Route path="/livro/editar/:isbn" element={<CadastroLivro/>}/>
                     </Routes>
                 </div>
                 <Rodape/>

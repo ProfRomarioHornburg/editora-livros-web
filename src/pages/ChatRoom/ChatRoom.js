@@ -1,8 +1,8 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Button, Card, TextInput} from "flowbite-react";
 import {Paragrafo, Titulo} from "../../components";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
-import {apiMensagens, WebSocketContext} from '../../services';
+import {apiMensagens} from '../../services';
 import {useParams} from "react-router-dom";
 import Cookies from 'js-cookie';
 
@@ -11,7 +11,6 @@ export const ChatRoom = () => {
     const isbn = useParams().isbn
     const [mensagens, setMensagens] = useState([]);
     const [mensagem, setMensagem] = useState({});
-    const {sendMessage,subscribeLivros, stompClient} = useContext(WebSocketContext);
 
     useEffect(() => {
         async function carregar() {
@@ -38,19 +37,8 @@ export const ChatRoom = () => {
             remetente: {cpf: cpf},
             mensagem: null
         })
+        console.log(mensagem)
     }
-
-    useEffect(() => {
-        const handleNovaMensagem = (response) => {
-            const mensagemRecebida = JSON.parse(response.body);
-            console.log('Mensagem recebida: ', mensagemRecebida);
-            setMensagens([...mensagens, mensagemRecebida]);
-            console.log(mensagens);
-        };
-        if(stompClient) {
-                subscribeLivros(`/livro/${isbn}/chat`, handleNovaMensagem);
-        }
-    }, [isbn, subscribeLivros, stompClient, mensagens]);
 
     const atualizaMensagem = (event) => {
         event.preventDefault();
@@ -60,17 +48,13 @@ export const ChatRoom = () => {
 
     const submit = async (event) => {
         event.preventDefault();
-        console.log(mensagem);
-        sendMessage(`/editora-livros-api/livro/${isbn}`, mensagem)
-        setDefaultMensagem();
-        // const response = await apiMensagens.postMensagem(mensagem)
-        //     .then((response) => {
-        //         return response;
-        //     }).catch((error) => {
-        //         console.log(error);
-        //     })
-        // const mensagensNova = [...mensagensAntigas, response];
-        // setMensagens(mensagensNova)
+        const response = await apiMensagens.postMensagem(mensagem)
+            .then((response) => {
+                return response;
+            }).catch((error) => {
+                console.log(error);
+            })
+        setMensagens([...mensagens, response]);
     }
 
     return (

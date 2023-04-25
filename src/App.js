@@ -2,12 +2,10 @@ import React from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import {Rodape, BarraNavegacao} from './components';
 import {Home, Livros, Contato, Login, CadastroUsuario, ChatRoom, CadastroLivro} from './pages';
-import {WebSocketProvider} from "./services";
 
 export const App = React.memo(() => {
     return (<>
-            <WebSocketProvider>
-                <BrowserRouter>
+            <BrowserRouter>
                     <BarraNavegacao/>
                     <div className="container mx-auto mb-20 px-4 sm:px-6 py-6">
                         <Routes>
@@ -25,6 +23,5 @@ export const App = React.memo(() => {
                     </div>
                     <Rodape/>
                 </BrowserRouter>
-            </WebSocketProvider>
         </>)
 })

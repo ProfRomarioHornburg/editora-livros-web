@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {Button, Card, Label, TextInput, Checkbox, Select, Spinner} from "flowbite-react";
 import PessoasService from "../../services/PessoasService";
-import {usePessoa} from "../../hooks/usePessoa";
 import pessoaJson from "./pessoa.json";
+import { Navigate } from 'react-router-dom';
 
 export const CadastroUsuario = () => {
 
@@ -18,12 +18,15 @@ export const CadastroUsuario = () => {
         })
     }
 
+    const atualizarPessoa = (event) => {
+        const { name, value } = event.target;
+        setPessoa((pessoa) => ({ ...pessoa, [name]: value }));
+    };
+
     function voltar() {
         console.log("voltar")
-        // history.push('/login')
+        return <Navigate to="/livros" />
     }
-
-    const {atualizarPessoa} = usePessoa(pessoa, setPessoa)
 
     const [listaGenero, setListaGenero] = useState([])
 

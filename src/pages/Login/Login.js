@@ -4,16 +4,15 @@ import {login} from "../../services";
 import GoogleIcon from '@mui/icons-material/Google';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import {useNavigate} from "react-router-dom";
+import { Navigate } from 'react-router-dom';
 
 export const Login = () => {
-
+    const [logado, setLogado] = useState(false);
     const [user, setUser] = useState({
         email: '',
         senha: ''
     });
 
-    const navigate = useNavigate()
     const atualizarUsuario = (event) => {
         setUser({...user, [event.target.name]: event.target.value})
         console.log(user);
@@ -21,11 +20,15 @@ export const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-            await login(user).then(() => {
-                navigate("/")
-            }).catch((error) => {
+        await login(user).then(() => {
+            setLogado(true);
+        }).catch((error) => {
             console.error(error);
         })
+    }
+
+    if (logado) {
+        return <Navigate to="/livros" />
     }
 
     return (

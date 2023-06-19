@@ -28,3 +28,4 @@ yarn-error.log*
 /.idea/editora-livros-web.iml
 /.idea/vcs.xml
 /.idea/modules.xml
+.idea/workspace.xml
